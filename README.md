@@ -1,6 +1,10 @@
 # SitePic
 A discord bot that generates user profile pictures via private messages.
 
+![sitepic](https://github.com/SitekickRemastered/SitePic/assets/1341176/55264b8b-07f2-4b33-ab00-9a6bd52586fd)
+
+
+
 # General Commands:
 - /help - Opens help menu. If it already exists, a link to this message will be posted.
 
@@ -33,7 +37,11 @@ A discord bot that generates user profile pictures via private messages.
 Use the buttons below SitePic's message to navigate and make changes to your own Sitekick avatar.
 After you finish your avatar, you can download it and upload it to Discord.
 
+# Detailed Tutorial:
+https://wiki.sitekickremastered.com/en/Home/Sitekick/Tutorials/SitePic
+
 # Dependencies
 JDA v5.0.0-beta.17 (Included) - https://github.com/discord-jda/JDA
 
 Amazon Corretto 21 (OpenJDK) - https://corretto.aws/downloads/latest/amazon-corretto-21-x64-windows-jdk.msi
+
