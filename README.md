@@ -1,9 +1,7 @@
 # SitePic
 A discord bot that generates user profile pictures via private messages.
 
-![sitepic](https://github.com/SitekickRemastered/SitePic/assets/1341176/55264b8b-07f2-4b33-ab00-9a6bd52586fd)
-
-
+https://github.com/SitekickRemastered/SitePic/assets/1341176/04a8aa75-7cce-4161-b416-b7bead119d3f
 
 # General Commands:
 - /help - Opens help menu. If it already exists, a link to this message will be posted.
@@ -33,6 +31,15 @@ A discord bot that generates user profile pictures via private messages.
 
 - /flip - Allows you to flip the profile picture... looks weird.
 
+# Presets
+- /deadkick - Sets your avatar to a deactivated Sitekick's body color & closed eyes.
+
+- /kablooey - Sets your avatar to Kablooey's body & eye colors.
+
+- /authicer - Sets your avatar to Authicer's body & eye colors.
+
+- /paul - Sets your avatar to Paul's body & eye colors.
+
 # Brief Tutorial:
 Use the buttons below SitePic's message to navigate and make changes to your own Sitekick avatar.
 After you finish your avatar, you can download it and upload it to Discord.
@@ -45,3 +52,5 @@ JDA v5.0.0-beta.17 (Included) - https://github.com/discord-jda/JDA
 
 Amazon Corretto 21 (OpenJDK) - https://corretto.aws/downloads/latest/amazon-corretto-21-x64-windows-jdk.msi
 
+# Other Notes:
+Make sure the environment variables file is named ".env"
