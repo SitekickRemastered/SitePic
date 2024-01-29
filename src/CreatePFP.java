@@ -105,8 +105,10 @@ public class CreatePFP {
         }
 
         // If the current eyes are hollow eyes, get rid of messed up transparency stuff and multiply instead of burn
-        if (eyeImage.equals("HollowEyes.png"))
+        if (eyeImage.equals("HollowEyes.png")) {
             eyes = fixShit(eyes, dyeImage(eyes, colour, BlendComposite.Multiply));
+            V.currentUser.clearPL();
+        }
 
         // If the user uses the deadkick preset, fix the eyes and subtract a specific colour
         if (V.currentUser.getDeadkick())
@@ -163,7 +165,8 @@ public class CreatePFP {
             V.currentUser.setBodyColour(BGP);
             g.setPaint(BGP);
             g.fillRect(0, 0, image.getWidth(), image.getHeight());
-            V.currentUser.clearPL();
+            if (!V.currentUser.getEyePic().equals("HollowEyes.png"))
+                V.currentUser.clearPL();
         }
         else {
             g.setPaint(colour);
