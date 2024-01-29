@@ -22,7 +22,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -99,13 +98,7 @@ public class Hub extends ListenerAdapter {
         if (e.getChannelType() == ChannelType.PRIVATE) {
             boolean sendEdit = false;
 
-            // If the user is not in the user list add then
-            if (!V.uc.userExists(V.uc.getUser(e.getUser().getName()))) {
-                User user = new User(e.getUser().getName());
-                V.uc.addUser(user);
-            }
-            // Set the current user
-            V.currentUser = V.uc.getUser(e.getUser().getName());
+            setUser(e.getUser().getName());
 
             // Send the menu to the user
             if (e.getName().equals("menu")) {
@@ -559,6 +552,17 @@ public class Hub extends ListenerAdapter {
         }
     }
 
+
+    public void setUser(String author){
+        //Save the user if they don't exist in the userList
+        if (!V.uc.userExists(V.uc.getUser(author))) {
+            User user = new User(author);
+            V.uc.addUser(user);
+        }
+        //Set the current user
+        V.currentUser = V.uc.getUser(author);
+    }
+
     /**
      * The bot seems to change message's IDs if the message is edited.
      * This function makes sure that a message is included if it's edited.
@@ -566,6 +570,7 @@ public class Hub extends ListenerAdapter {
      * @param e - Message Update Event Listener.
      */
     public void onMessageUpdate(MessageUpdateEvent e) {
+        setUser(e.getChannel().getName());
         if (e.getAuthor().isBot() && !e.getMessage().isEphemeral() && !V.currentUser.messageExists(e.getMessage()))
             V.currentUser.addBotMessage(e.getMessage());
     }
@@ -580,20 +585,15 @@ public class Hub extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent e) {
         if (e.getChannelType() == ChannelType.PRIVATE) {
 
-            // Add the bot message in case the user wants to delete it laster.
-            if (e.getAuthor().isBot() && !e.getMessage().isEphemeral() && !V.currentUser.messageExists(e.getMessage()))
+            setUser(e.getChannel().getName());
+
+            // Add the bot message in case the user wants to delete it later.
+            if (e.getAuthor().isBot() && !e.getMessage().isEphemeral() && !V.currentUser.messageExists(e.getMessage())) {
                 V.currentUser.addBotMessage(e.getMessage());
+            }
 
-            // If the user messages
+            // If the user messages the private channel
             else {
-                //Save the user if they don't exist in the userList
-                if (!V.uc.userExists(V.uc.getUser(e.getAuthor().getName()))) {
-                    User user = new User(e.getAuthor().getName());
-                    V.uc.addUser(user);
-                }
-                //Set the currnet user
-                V.currentUser = V.uc.getUser(e.getAuthor().getName());
-
                 //If the help message doesn't exist then delete the bot messages before and send the help message
                 if (V.currentUser.getHelpMessage() == null) {
                     if (!V.currentUser.getBotMessages().isEmpty()) {
@@ -631,39 +631,37 @@ public class Hub extends ListenerAdapter {
         String reactionName = e.getButton().getEmoji().getName();
         String fullReaction = e.getButton().getEmoji().getAsReactionCode();
 
-        if (!Objects.requireNonNull(e.getUser()).isBot()) {
-            V.currentUser = V.uc.getUser(e.getUser().getName());
+        setUser(e.getUser().getName());
 
-            // If the button we clicked is a traversal option, we can only go to the Main Menu, Body Menu, Eyes Menu, or Help Menu
-            if (Arrays.asList(V.traversalMenuStrings).contains(e.getButton().getLabel())) {
-                SendPFP.deleteMessages(e);
+        // If the button we clicked is a traversal option, we can only go to the Main Menu, Body Menu, Eyes Menu, or Help Menu
+        if (Arrays.asList(V.traversalMenuStrings).contains(e.getButton().getLabel())) {
+            SendPFP.deleteMessages(e);
 
-                if (e.getButton().getLabel().equals("Back") || e.getButton().getLabel().equals("Main Menu")) {
-                    Menus.menu(e);
-                    e.deferReply().setEphemeral(true).queue(m -> m.deleteOriginal().queue());
-                }
-
-                if (e.getButton().getLabel().equals("Body Menu"))
-                    Menus.body(e);
-
-                if (e.getButton().getLabel().equals("Eyes Menu"))
-                    Menus.eyes(e);
-
-                if (e.getButton().getLabel().equals("Help"))
-                    Menus.help(e);
+            if (e.getButton().getLabel().equals("Back") || e.getButton().getLabel().equals("Main Menu")) {
+                Menus.menu(e);
+                e.deferReply().setEphemeral(true).queue(m -> m.deleteOriginal().queue());
             }
-            // Otherwise the button was a preset, so we have to set the BodyColour or EyePic depending on the current location.
-            else {
-                if (V.currentUser.getLocation().equals("body"))
-                    V.currentUser.setBodyColour(V.colourArray[Arrays.asList(V.bodyReactions).indexOf(fullReaction)]);
 
-                if (V.currentUser.getLocation().equals("eyes"))
-                    V.currentUser.setEyePic(reactionName + ".png");
-                editEmbed = true;
-            }
-            if (editEmbed)
-                SendPFP.editEmbed(e);
+            if (e.getButton().getLabel().equals("Body Menu"))
+                Menus.body(e);
+
+            if (e.getButton().getLabel().equals("Eyes Menu"))
+                Menus.eyes(e);
+
+            if (e.getButton().getLabel().equals("Help"))
+                Menus.help(e);
         }
+        // Otherwise the button was a preset, so we have to set the BodyColour or EyePic depending on the current location.
+        else {
+            if (V.currentUser.getLocation().equals("body"))
+                V.currentUser.setBodyColour(V.colourArray[Arrays.asList(V.bodyReactions).indexOf(fullReaction)]);
+
+            if (V.currentUser.getLocation().equals("eyes"))
+                V.currentUser.setEyePic(reactionName + ".png");
+            editEmbed = true;
+        }
+        if (editEmbed)
+            SendPFP.editEmbed(e);
 
         // If the button we clicked is attached to the help message,
         // delete the buttons on the help menu so the user doesn't break anything.
