@@ -244,6 +244,7 @@ public class Hub extends ListenerAdapter {
 
                     // If  valid, add each colour to a list that will be used to set the colour to each section.
                     else {
+                        V.currentUser.setBodyColour(null);
                         V.currentUser.addToSL(g1);
                         V.currentUser.addToSL(g2);
                         V.currentUser.addToSL(g3);

@@ -105,18 +105,16 @@ public class CreatePFP {
         }
 
         // If the current eyes are hollow eyes, get rid of messed up transparency stuff and multiply instead of burn
-        if (eyeImage.equals("HollowEyes.png")) {
+        if (eyeImage.equals("HollowEyes.png"))
             eyes = fixShit(eyes, dyeImage(eyes, colour, BlendComposite.Multiply));
-            V.currentUser.clearPL();
-        }
-
-        // If the user uses the deadkick preset, fix the eyes and subtract a specific colour
-        if (V.currentUser.getDeadkick())
-            eyes = fixShit(eyes, dyeImage(eyes, new Color(136, 117, 60), BlendComposite.Subtract));
 
         // If the current eyes are custom eyes, get rid of messed up transparency and use linear burn
         if (eyeImage.equals("CustomEyes.png"))
             eyes = fixShit(eyes, dyeImage(eyes, customEyeColour, BlendComposite.Subtract));
+
+        // If the user uses the deadkick preset, fix the eyes and subtract a specific colour
+        if (V.currentUser.getDeadkick())
+            eyes = fixShit(eyes, dyeImage(eyes, new Color(136, 117, 60), BlendComposite.Subtract));
 
         g.drawImage(eyes, 0, 0, null);
 
@@ -137,8 +135,11 @@ public class CreatePFP {
             V.currentUser.setDeadkick(false);
         }
 
-        if (!V.currentUser.getSL().isEmpty())
+        if (colour != null){
+            V.currentUser.clearPL();
             V.currentUser.clearSL();
+        }
+
         return pfp;
     }
 
@@ -165,8 +166,6 @@ public class CreatePFP {
             V.currentUser.setBodyColour(BGP);
             g.setPaint(BGP);
             g.fillRect(0, 0, image.getWidth(), image.getHeight());
-            if (!V.currentUser.getEyePic().equals("HollowEyes.png"))
-                V.currentUser.clearPL();
         }
         else {
             g.setPaint(colour);
