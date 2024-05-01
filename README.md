@@ -3,6 +3,8 @@ A discord bot that generates user profile pictures via private messages.
 
 https://github.com/SitekickRemastered/SitePic/assets/1341176/04a8aa75-7cce-4161-b416-b7bead119d3f
 
+---
+
 # General Commands:
 - `/help` - Opens help menu. If it already exists, a link to this message will be posted.
 
@@ -44,6 +46,8 @@ https://github.com/SitekickRemastered/SitePic/assets/1341176/04a8aa75-7cce-4161-
 
 - Deadkick - Sets your avatar to a deactivated Sitekick's body color & closed eyes.
 
+---
+
 # Brief Tutorial:
 Use the buttons below SitePic's message to navigate and make changes to your own Sitekick avatar.
 After you finish your avatar, you can download it and upload it to Discord.
@@ -51,14 +55,22 @@ After you finish your avatar, you can download it and upload it to Discord.
 # Detailed Tutorial:
 https://wiki.sitekickremastered.com/en/Home/Sitekick/Tutorials/SitePic
 
+---
+
 # Dependencies
 JDA v5.0.0-beta.23 (Included) - https://github.com/discord-jda/JDA
 
 Logback Classic 1.5.6 (Should be installed with Maven) - https://logback.qos.ch/download.html
 
+Logback Core 1.5.6 (Should be installed with Maven) - https://logback.qos.ch/download.html
+
+SLF4J API 2.0.1.3 (Should be installed with Maven) - https://www.slf4j.org/download.html
+
 Amazon Corretto 21 (OpenJDK) - https://corretto.aws/downloads/latest/amazon-corretto-21-x64-windows-jdk.msi
 
 # Other Notes:
-Make sure the environment variables file is named ".env"
+Make sure the environment variables file is named ".env".
 
-The .env file should be placed in `src/main/java/org/SitekickRemastered`
+If running from the source, The `.env` file should be placed in the main directory.
+
+If running with the `.jar`, the `.env` file should be placed in the same directory as the `.jar`.

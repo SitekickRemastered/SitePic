@@ -31,7 +31,7 @@ public class Main {
                                :##+===+*%@#=:.                                                                \s
                                  .:===-:.                                                                     \s""");
 
-        Dotenv dotenv = Dotenv.configure().directory("src/main/java/org/SitekickRemastered/.env").load();
+        Dotenv dotenv = Dotenv.configure().filename(".env").load();
         String token = dotenv.get("SITEPIC_TOKEN");
 
         DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(token);
