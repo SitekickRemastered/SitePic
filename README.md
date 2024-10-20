@@ -58,13 +58,8 @@ https://wiki.sitekickremastered.com/en/Home/Sitekick/Tutorials/SitePic
 ---
 
 # Dependencies
-JDA v5.0.0-beta.23 (Included) - https://github.com/discord-jda/JDA
 
-Logback Classic 1.5.6 (Should be installed with Maven) - https://logback.qos.ch/download.html
-
-Logback Core 1.5.6 (Should be installed with Maven) - https://logback.qos.ch/download.html
-
-SLF4J API 2.0.1.3 (Should be installed with Maven) - https://www.slf4j.org/download.html
+All libraries should be added through Maven
 
 Amazon Corretto 21 (OpenJDK) - https://corretto.aws/downloads/latest/amazon-corretto-21-x64-windows-jdk.msi
 
